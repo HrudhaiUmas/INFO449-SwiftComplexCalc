@@ -53,6 +53,57 @@ class Calculator
     {
         return op(lhs, rhs);
     }
+    
+    // MARK: Array Opperations Calculations
+    
+    func add(_ values: [Int]) -> Int
+    {
+        var result = 0;
+        
+        for value in values
+        {
+            result += value;
+        }
+        
+        return result;
+    }
+    
+    func multiply(_ values: [Int]) -> Int
+    {
+        var result = 1;
+        
+        for value in values
+        {
+            result += value * result;
+        }
+        
+        return result;
+    }
+    
+    func count(_ values: [Int]) -> Int
+    {
+//        var totalCount = 0;
+//        
+//        for value in values
+//        {
+//            totalCount += 1;
+//        }
+//        
+//        return totalCount;
+        return values.count;
+    }
+    
+    func avg(_ values: [Int]) -> Int
+    {
+        if values.count == 0
+        {
+            return 0;
+        }
+        
+        return self.add(values) / self.count(values);
+    }
+    
+    
 }
 
 //: Don't change the name of this object (`calc`); it's used in all the tests.
@@ -82,14 +133,14 @@ calc.mathOp(lhs: 5, rhs: 5, op: { (lhs: Int, rhs: Int) -> Int in (lhs + rhs) + (
 calc.mathOp(lhs: 10, rhs: -5, op: { ($0 + $1) + ($0 - $1) }) == 20
     // This is the second, more terse, style; either works
 
-//calc.add([1, 2, 3, 4, 5]) == 15
-//calc.multiply([1, 2, 3, 4, 5]) == 120
-//calc.count([1, 2, 3, 4, 5, 6, 7, 8]) == 8
-//calc.count([]) == 0
-//calc.avg([2, 2, 2, 2, 2, 2]) == 2
-//calc.avg([1, 2, 3, 4, 5]) == 3
-//calc.avg([1]) == 1
-//
+calc.add([1, 2, 3, 4, 5]) == 15
+calc.multiply([1, 2, 3, 4, 5]) == 120
+calc.count([1, 2, 3, 4, 5, 6, 7, 8]) == 8
+calc.count([]) == 0
+calc.avg([2, 2, 2, 2, 2, 2]) == 2
+calc.avg([1, 2, 3, 4, 5]) == 3
+calc.avg([1]) == 1
+
 //calc.mathOp(args: [1, 2, 3], beg: 0, op: { $0 + $1 }) == 6
 //    // this is (((0 op 1) op 2) op 3)
 //calc.mathOp(args: [1, 2, 3, 4, 5], beg: 0, op: { $0 + $1 }) == 15
