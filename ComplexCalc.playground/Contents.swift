@@ -74,7 +74,7 @@ class Calculator
         
         for value in values
         {
-            result += value * result;
+            result = value * result;
         }
         
         return result;
@@ -126,6 +126,24 @@ class Calculator
         return(lhs.0 - rhs.0, lhs.1 - rhs.1);
     }
     
+    // MARK: Dictionary Operations
+    
+    func add(lhs: [String: Int], rhs: [String: Int]) -> [String: Int]
+    {
+            var result: [String: Int] = [:]
+            result["x"] = lhs["x"]! + rhs["x"]!
+            result["y"] = lhs["y"]! + rhs["y"]!
+            return result
+    }
+
+    func subtract(lhs: [String: Int], rhs: [String: Int]) -> [String: Int]
+    {
+            var result: [String: Int] = [:]
+            result["x"] = lhs["x"]! - rhs["x"]!
+            result["y"] = lhs["y"]! - rhs["y"]!
+            return result
+    }
+    
 }
 
 //: Don't change the name of this object (`calc`); it's used in all the tests.
@@ -142,7 +160,43 @@ let calc = Calculator()
 
 // ===== Your tests go here
 
-//: ---
+// Negative number handling (array add & multiply)
+calc.add([-1, -2, -3, -4]) == -10
+calc.multiply([-1, 2, -3]) == 6
+
+// Empty array behavior
+calc.add([]) == 0
+
+// multiply([]) returns 1
+calc.multiply([]) == 1
+
+// avg([]) returns 0 to avoid divide-by-zero
+calc.avg([]) == 0
+
+// average with odd total / non-even length
+// assumption is that avg uses integer division and truncates toward zero
+calc.avg([1, 2]) == 1
+calc.avg([1, 2, 3]) == 2
+
+
+// mixed positive and negative numbers
+calc.avg([-2, 2]) == 0
+
+// dictionary point operations with negative values
+let pd3 = ["x": -10, "y": 20]
+let pd4 = ["x": 5, "y": -5]
+
+calc.add(lhs: pd3, rhs: pd4) == ["x": -5, "y": 15]
+calc.subtract(lhs: pd3, rhs: pd4) == ["x": -15, "y": 25]
+
+// mathOp with subtraction over array
+calc.mathOp(args: [10, 5, 2], beg: 20, op: { $0 - $1 }) == 3
+// (((20 - 10) - 5) - 2) = 3
+
+// Order matters for mathOp with subtraction
+calc.mathOp(args: [1, 2, 3], beg: 0, op: { $0 - $1 }) == -6
+// (((0 - 1) - 2) - 3) = -6
+
 //: ## Test code block
 //: Do not modify the code in this section
 calc.add(lhs: 2, rhs: 2) == 4
@@ -179,7 +233,7 @@ calc.subtract(lhs: p1, rhs: p2) == (-7, 32)
 calc.add(lhs: p4, rhs: p4) == (0, 0)
 calc.add(lhs: p3, rhs: p4) == (-4, 4)
 
-//let pd1 = ["x": 5, "y": 5]
-//let pd2 = ["x": -4, "y": 4]
-//calc.add(lhs: pd1, rhs: pd2) == ["x": 1, "y": 9]
-//calc.subtract(lhs: pd1, rhs: pd2) == ["x": 9, "y": 1]
+let pd1 = ["x": 5, "y": 5]
+let pd2 = ["x": -4, "y": 4]
+calc.add(lhs: pd1, rhs: pd2) == ["x": 1, "y": 9]
+calc.subtract(lhs: pd1, rhs: pd2) == ["x": 9, "y": 1]
