@@ -103,7 +103,17 @@ class Calculator
         return self.add(values) / self.count(values);
     }
     
-    
+    func mathOp(args: [Int], beg: Int, op: (Int, Int) -> Int) -> Int
+    {
+        var result = beg;
+        
+        for arg in args
+        {
+            result = op(result, arg);
+        }
+        
+        return result;
+    }
 }
 
 //: Don't change the name of this object (`calc`); it's used in all the tests.
@@ -141,13 +151,13 @@ calc.avg([2, 2, 2, 2, 2, 2]) == 2
 calc.avg([1, 2, 3, 4, 5]) == 3
 calc.avg([1]) == 1
 
-//calc.mathOp(args: [1, 2, 3], beg: 0, op: { $0 + $1 }) == 6
-//    // this is (((0 op 1) op 2) op 3)
-//calc.mathOp(args: [1, 2, 3, 4, 5], beg: 0, op: { $0 + $1 }) == 15
-//    // this is (((((0 op 1) op 2) op 3) op 4) op 5)
-//calc.mathOp(args: [1, 1, 1, 1, 1], beg: 1, op: { $0 * $1 }) == 1
-//    // this is (((((1 op 1) op 1) op 1) op 1) op 1)
-//
+calc.mathOp(args: [1, 2, 3], beg: 0, op: { $0 + $1 }) == 6
+    // this is (((0 op 1) op 2) op 3)
+calc.mathOp(args: [1, 2, 3, 4, 5], beg: 0, op: { $0 + $1 }) == 15
+    // this is (((((0 op 1) op 2) op 3) op 4) op 5)
+calc.mathOp(args: [1, 1, 1, 1, 1], beg: 1, op: { $0 * $1 }) == 1
+    // this is (((((1 op 1) op 1) op 1) op 1) op 1)
+
 //let p1 = (5, 5)
 //let p2 = (12, -27)
 //let p3 = (-4, 4)
